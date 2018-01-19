@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import th.co.gosoft.customer.dao.DataCustomerDAO;
-import th.co.gosoft.customer.dto.DataCustomerDTO;
+import th.co.gosoft.customer.dao.CustomerDAO;
+import th.co.gosoft.customer.dto.CustomerDTO;
 @WebServlet("/DataCustomerServlert")
 public class DataCustomerServlert extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -20,27 +20,15 @@ public class DataCustomerServlert extends HttpServlet {
         super();
     }
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DataCustomerDAO dataCustomerDAO=new DataCustomerDAO();
-		List<DataCustomerDTO> resultList=null;
+		CustomerDAO customerDAO=new CustomerDAO();
+		List<CustomerDTO> resultList=null;
 		try {
-			resultList=dataCustomerDAO.selectAllCustomer();
+			resultList=customerDAO.selectCustomer();
 			Gson gson=new Gson();
 			String result=gson.toJson(resultList);
 			response.setContentType("application/Json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().print(result);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	public static void main(String[] args) {
-		DataCustomerDAO dataCustomerDAO=new DataCustomerDAO();
-		List<DataCustomerDTO> resultList=null;
-		try {
-			resultList=dataCustomerDAO.selectAllCustomer();
-			Gson gson=new Gson();
-			String result=gson.toJson(resultList);
-			System.out.println(result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
